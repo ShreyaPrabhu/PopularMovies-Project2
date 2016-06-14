@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="horizontal"
+    tools:context="com.example.shreyaprabhu.popmovies.MainActivity">
+
+    <!--
+    This layout is a two-pane layout for the Items master/detail flow.
+
+    fragment_forecast = activity_movie_main_fragment
+    weather_detail_container = activity_movie_detail_fragment
+    -->
+
+    <fragment
+        android:id="@+id/activity_movie_main_fragment"
+        android:name="com.example.shreyaprabhu.popmovies.MovieMainFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        tools:layout="@android:layout/activity_list_item" />
+
+    <FrameLayout
+        android:id="@+id/activity_movie_detail_fragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3" />
+
+</LinearLayout>

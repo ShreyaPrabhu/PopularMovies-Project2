@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">PopMovies</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_pomov_list_fragment">PomovListFragment</string>
+    <string name="title_activity_movie_detail">MovieDetailActivity</string>
+    <string name="title_activity_movie_main">MovieMainActivity</string>
+    <string name="title_activity_movie_main_fragment">MovieMainFragment</string>
+    <string name="action_highest_rating">Ratings</string>
+    <string name="action_most_popular">Popularity</string>
+    <string name="action_set_favourite">Favourites</string>
+    <string name="action_now_playing">Now Playing</string>
+    <string name="favorite">Added to Favorites</string>
+    <string name="notfavorite">Removed from Favorites</string>
+
+    <string name="Tool_bar">Toolbar</string>
+    <string name="title_activity_movie_detail_fragment">MovieDetailFragment</string>
+</resources>
