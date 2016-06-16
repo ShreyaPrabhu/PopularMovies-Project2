@@ -228,7 +228,7 @@ public class MovieMainFragment extends Fragment {
 
 
         private final String TAG = fetchMovieDetails.class.getSimpleName();
-        private final String KEY ="140cb8624b45f03ae9c0d887bf161ee4"; //API  KEY
+        private final String KEY =""; //API  KEY
 
 
         @Override
@@ -326,7 +326,7 @@ public class MovieMainFragment extends Fragment {
 
 
         private final String TAG = fetchOneMovieDetails.class.getSimpleName();
-        private final String KEY ="140cb8624b45f03ae9c0d887bf161ee4";//API KEY
+        private final String KEY ="";//API KEY
 
 
         @Override

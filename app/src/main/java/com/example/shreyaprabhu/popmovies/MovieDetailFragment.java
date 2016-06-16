@@ -51,7 +51,7 @@ public class MovieDetailFragment extends Fragment{
 
     private android.support.v7.widget.Toolbar toolbar;
     private final String Trailer_Url = "http://api.themoviedb.org/3/movie/";
-    private final String KEY = "140cb8624b45f03ae9c0d887bf161ee4"; //API KEY
+    private final String KEY = ""; //API KEY
     ArrayList<TrailerAttributes> mtrailerAttributes;
     RecyclerView mtrailerRecycler;
 
