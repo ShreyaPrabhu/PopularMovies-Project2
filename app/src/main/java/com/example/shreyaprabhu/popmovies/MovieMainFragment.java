@@ -4,6 +4,7 @@ package com.example.shreyaprabhu.popmovies;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.OkHttpClient;
@@ -48,11 +50,15 @@ public class MovieMainFragment extends Fragment {
     private final String TAG1 = MovieMainFragment.class.getSimpleName();
 
 
+
     public interface onMovieClickedListener {
         public void MovieClicked(MovieAttributes movieClicked);
         public void Movie_BeforeClick(MovieAttributes movieClicked);
     }
     onMovieClickedListener movieClickedListener;
+
+
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -65,16 +71,16 @@ public class MovieMainFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-
-        fetchMovieDetails fetchMovieDetails = new fetchMovieDetails();
-        fetchMovieDetails.execute();
-        BaseUrl = "http://api.themoviedb.org/3/movie/now_playing";
+            if(checkInternetConenction()) {
+                fetchMovieDetails fetchMovieDetails = new fetchMovieDetails();
+                fetchMovieDetails.execute();
+                BaseUrl = "http://api.themoviedb.org/3/movie/now_playing";
+            }
 
         sharedpreferences = this.getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
     }
@@ -103,9 +109,9 @@ public class MovieMainFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 MovieAttributes movieModel = mMovies.get(position);
                 movieClickedListener.MovieClicked(movieModel);
-                }
+            }
 
-            }));
+        }));
 
 
         return view;
@@ -158,29 +164,63 @@ public class MovieMainFragment extends Fragment {
 
     public void sortMovies(String a) {
         if (a.equals("popular")) {
-            BaseUrl = "http://api.themoviedb.org/3/movie/popular";
-            fetchMovieDetails fetchMovieDetails = new fetchMovieDetails();
-            fetchMovieDetails.execute();
+            if(checkInternetConenction()) {
 
+                BaseUrl = "http://api.themoviedb.org/3/movie/popular";
+                fetchMovieDetails fetchMovieDetails = new fetchMovieDetails();
+                fetchMovieDetails.execute();
+            }
         }
         if (a.equals("rate")) {
-            BaseUrl = "http://api.themoviedb.org/3/movie/top_rated";
-            fetchMovieDetails fetchMovieDetails = new fetchMovieDetails();
-            fetchMovieDetails.execute();
+            if(checkInternetConenction()) {
 
+                BaseUrl = "http://api.themoviedb.org/3/movie/top_rated";
+                fetchMovieDetails fetchMovieDetails = new fetchMovieDetails();
+                fetchMovieDetails.execute();
+            }
         }
         if (a.equals("playing")) {
-            BaseUrl = "http://api.themoviedb.org/3/movie/now_playing";
-            fetchMovieDetails fetchMovieDetails = new fetchMovieDetails();
-            fetchMovieDetails.execute();
+            if(checkInternetConenction()) {
+
+                BaseUrl = "http://api.themoviedb.org/3/movie/now_playing";
+                fetchMovieDetails fetchMovieDetails = new fetchMovieDetails();
+                fetchMovieDetails.execute();
+            }
 
         }
 
 
         if (a.equals("favourite")) {
-            fetchOneMovieDetails fetchOneMovieDetails = new fetchOneMovieDetails();
-            fetchOneMovieDetails.execute();
+
+            if(checkInternetConenction()) {
+
+                fetchOneMovieDetails fetchOneMovieDetails = new fetchOneMovieDetails();
+                fetchOneMovieDetails.execute();
+            }
         }
+    }
+
+
+
+
+    private boolean checkInternetConenction() {
+        ConnectivityManager check = (ConnectivityManager)
+                this.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        // Check for network connections
+        if ( check.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
+
+                check.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                check.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                check.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED ) {
+
+            return true;
+        }else if (
+                check.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
+                        check.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED  ) {
+            Toast.makeText(this.getContext(), "Switch on Net Connection and Restart App", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return false;
     }
 
 
@@ -188,7 +228,7 @@ public class MovieMainFragment extends Fragment {
 
 
         private final String TAG = fetchMovieDetails.class.getSimpleName();
-        private final String KEY =""; //API  KEY
+        private final String KEY ="140cb8624b45f03ae9c0d887bf161ee4"; //API  KEY
 
 
         @Override
@@ -204,7 +244,8 @@ public class MovieMainFragment extends Fragment {
             if (isAdded()) {
                 mRecyclerView.setAdapter(new MovieRecyclerAdapter(getActivity(), mMovies));
             }
-            movieClickedListener.Movie_BeforeClick(mMovies.get(0));
+            if(mMovies!=null)
+                movieClickedListener.Movie_BeforeClick(mMovies.get(0));
 
         }
 
@@ -285,7 +326,7 @@ public class MovieMainFragment extends Fragment {
 
 
         private final String TAG = fetchOneMovieDetails.class.getSimpleName();
-        private final String KEY ="";//API KEY
+        private final String KEY ="140cb8624b45f03ae9c0d887bf161ee4";//API KEY
 
 
         @Override
