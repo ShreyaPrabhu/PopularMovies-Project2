@@ -50,6 +50,7 @@ public class MovieDetailFragment extends Fragment{
     MovieAttributes movieClicked;
 
     private android.support.v7.widget.Toolbar toolbar;
+
     private final String Trailer_Url = "http://api.themoviedb.org/3/movie/";
     private final String KEY = ""; //API KEY
     ArrayList<TrailerAttributes> mtrailerAttributes;
@@ -258,11 +259,25 @@ public class MovieDetailFragment extends Fragment{
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
+
+       super.onCreateOptionsMenu(menu,inflater);
     }
+
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.menu_item_share){
+            Intent share = new Intent(android.content.Intent.ACTION_SEND);
+            share.setType("text/plain");
+            share.putExtra(Intent.EXTRA_SUBJECT, movieClicked.getMovieTitle());
+            share.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=".concat(mtrailerAttributes.get(0).getKey()));
+            startActivity(Intent.createChooser(share, "Share Movie Trailer"));
+
+        }
         return super.onOptionsItemSelected(item);
     }
 
